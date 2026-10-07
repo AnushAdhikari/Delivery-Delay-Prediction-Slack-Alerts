@@ -89,6 +89,8 @@ I used **Perplexity** as an AI assistant to plan the workflow, draft code, debug
 
 - **Connecting to Slack.** I had trouble connecting the notebook to Slack at first. The AI assistant walked me through it step by step: creating the Slack app, turning on Incoming Webhooks, adding a webhook to `#dispatch-alerts`, and storing the URL in a `.env` file instead of in the code. I then tested it with a short message before sending the real alert. The final setup worked because I followed each step and checked the result before moving on.
 - 
+- - **Slack 403 Forbidden error.** When I sent the first alert, Slack returned `HTTPError: 403 Client Error: Forbidden`. I asked the AI assistant what it meant. It explained that a 403 usually points to a problem with the webhook and not with the code, for example a revoked or incomplete URL, a deactivated app, or workspace restrictions. Following its steps, I [regenerated the webhook in the Slack app settings / fixed the URL in `.env`], restarted the kernel, and tested with a short message that printed the status code and Slack's response text. After that the alert posted successfully. I also cleared the cell output, because the error traceback displayed the webhook URL.
+- 
 **Where the AI was wrong or differed from my results:**
 
 1. **Code error.** The helper function `evaluate()` ended with `return pd.Series(row).round(3)`. The dictionary included the model name (a string), so `round` failed with `TypeError: type str doesn't define __round__ method`. I found it when I ran the cell. The fix was to leave out the "Model" entry before rounding.
