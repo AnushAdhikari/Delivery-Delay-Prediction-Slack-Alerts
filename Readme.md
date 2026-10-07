@@ -87,6 +87,8 @@ See Section 12 of the notebook: use the alerts each shift, review owner-operator
 
 I used **Perplexity** as an AI assistant to plan the workflow, draft code, debug, and write explanations. I reviewed and ran every piece of code myself, and I checked the numbers in the text against my notebook output.
 
+- **Connecting to Slack.** I had trouble connecting the notebook to Slack at first. The AI assistant walked me through it step by step: creating the Slack app, turning on Incoming Webhooks, adding a webhook to `#dispatch-alerts`, and storing the URL in a `.env` file instead of in the code. I then tested it with a short message before sending the real alert. The final setup worked because I followed each step and checked the result before moving on.
+- 
 **Where the AI was wrong or differed from my results:**
 
 1. **Code error.** The helper function `evaluate()` ended with `return pd.Series(row).round(3)`. The dictionary included the model name (a string), so `round` failed with `TypeError: type str doesn't define __round__ method`. I found it when I ran the cell. The fix was to leave out the "Model" entry before rounding.
