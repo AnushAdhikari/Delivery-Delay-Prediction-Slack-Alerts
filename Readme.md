@@ -84,6 +84,20 @@ Screenshot: `Screenshots/slack_alert.png`. The message gives the number of at-ri
 See Section 12 of the notebook: use the alerts each shift, review owner-operator contracts, check the weather before dispatch, limit stops on time-critical routes, act on late pickups, set realistic Economy windows, and complete a full pre-trip inspection of every truck.
 
 ## AI usage
-I used **Perplexity** as an AI assistant to plan the workflow, draft code and debug. I reviewed and ran every piece of code myself.
 
-**One case where the AI was wrong:** the helper function `evaluate()` ended with `return pd.Series(row).round(3)`. The dictionary included the model name (a string), so `round` failed with `TypeError: type str doesn't define __round__ method`. I found the error when I ran the cell, and the fix was to leave out the "Model" entry before rounding. The AI also gave an estimate of 105 for the watch-list count, but the real output was 92, so I used the real number.
+I used **Perplexity** as an AI assistant to plan the workflow, draft code, debug, and write explanations. I reviewed and ran every piece of code myself, and I checked the numbers in the text against my notebook output.
+
+**Where the AI was wrong or differed from my results:**
+
+1. **Code error.** The helper function `evaluate()` ended with `return pd.Series(row).round(3)`. The dictionary included the model name (a string), so `round` failed with `TypeError: type str doesn't define __round__ method`. I found it when I ran the cell. The fix was to leave out the "Model" entry before rounding.
+
+2. **Estimated numbers did not match the output.** The AI estimated about 105 shipments for the watch list (scores 0.50-0.60). The real output was 92. The AI's numbers were guesses made before the code ran, so I used the notebook output and corrected the text.
+
+3. **Output varied between runs of the same prompt.** When I asked the AI the same question twice, it gave slightly different suggestions, such as different feature ideas and different wording for the same recommendation. I treated its answers as drafts, tested each one in the notebook, and kept only what worked.
+
+**How I handled it:**
+- I ran every cell and compared the AI's claims with the real output.
+- I verified recommendations against the data. For example, the AI's pre-trip inspection suggestion is not backed by the dataset, so I labelled it as based on industry practice.
+- I did not copy any numbers that I could not find in my own output.
+
+**Lesson:** the AI is useful for speed, but it can be confidently wrong, and its answers can differ from one run to the next. The results in this project are the ones my code produced.
